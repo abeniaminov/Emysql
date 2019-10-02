@@ -479,8 +479,7 @@ encode(Val, list) when is_integer(Val) ->
 encode(Val, binary) when is_integer(Val) ->
     list_to_binary(integer_to_list(Val));
 encode(Val, list) when is_float(Val) ->
-    [Res] = io_lib:format("~w", [Val]),
-    Res;
+    lists:flatten(io_lib:format("~w", [Val]));
 encode(Val, binary) when is_float(Val) ->
     iolist_to_binary(io_lib:format("~w", [Val]));
 encode({datetime, Val}, ReturnType) ->
@@ -507,7 +506,7 @@ encode(Val, _) ->
 two_digits(Nums) when is_list(Nums) ->
     [two_digits(Num) || Num <- Nums];
 two_digits(Num) ->
-    Str = io_lib:format("~b", [Num]),
+    Str = lists:flatten(io_lib:format("~b", [Num])),
     case length(Str) of
         1 -> [$0 | Str];
         _ -> Str
