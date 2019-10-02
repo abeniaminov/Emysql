@@ -27,6 +27,8 @@
 %% 
 %% Handle authentication in the protocol
 %%
+
+
 %% @private
 -module(emysql_auth).
 
@@ -200,5 +202,9 @@ hash([], N1, N2, _Add) ->
     {N1 band Mask , N2 band Mask}.
 
 asciiz(Data) when is_binary(Data) ->
-    [S, R] = binary:split(Data, <<0>>),
-    {S, R}.
+    case  binary:split(Data, <<0>>) of
+       [S] -> 
+          {S, <<>>};
+       [S1, R] ->
+          {S1, R}
+    end.

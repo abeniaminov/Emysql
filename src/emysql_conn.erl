@@ -34,6 +34,7 @@
         test_connection/3, need_test_connection/1
 ]).
 
+
 -include("emysql.hrl").
 
 %% MYSQL COMMANDS
@@ -506,7 +507,7 @@ encode(Val, _) ->
 two_digits(Nums) when is_list(Nums) ->
     [two_digits(Num) || Num <- Nums];
 two_digits(Num) ->
-    [Str] = io_lib:format("~b", [Num]),
+    Str = io_lib:format("~b", [Num]),
     case length(Str) of
         1 -> [$0 | Str];
         _ -> Str
